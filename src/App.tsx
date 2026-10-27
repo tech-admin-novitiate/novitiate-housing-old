@@ -8,15 +8,18 @@ import { HowWeWorkTab } from './components/HowWeWorkTab';
 import { AboutTab } from './components/AboutTab';
 import { ContactTab } from './components/ContactTab';
 import { AdminPortal } from './components/AdminPortal';
+import { AdminLoginGate } from './components/AdminLoginGate';
 import { ChatWidget } from './components/ChatWidget';
 import { Property, FilterState } from './types';
 import { getProperties, getLeads, logAnalyticsEvent } from './services/storageService';
+import { isAdminAuthenticated } from './services/authService';
 
 export default function App() {
   const [currentTab, setCurrentTab] = useState<string>('home');
   const [properties, setProperties] = useState<Property[]>(getProperties());
   const [initialPropertiesFilter, setInitialPropertiesFilter] = useState<Partial<FilterState>>({});
   const [unreadLeadsCount, setUnreadLeadsCount] = useState<number>(0);
+  const [isAdminAuth, setIsAdminAuth] = useState<boolean>(isAdminAuthenticated());
 
   // Load properties and leads count
   const refreshData = () => {
@@ -24,21 +27,38 @@ export default function App() {
     const leads = getLeads();
     const newLeads = leads.filter((l) => l.status === 'New').length;
     setUnreadLeadsCount(newLeads);
+    setIsAdminAuth(isAdminAuthenticated());
   };
 
   useEffect(() => {
     refreshData();
     logAnalyticsEvent('page_view', 'App Launched');
 
+    // Support direct #admin navigation
+    if (window.location.hash === '#admin') {
+      setCurrentTab('admin');
+    }
+
+    const handleHashChange = () => {
+      if (window.location.hash === '#admin') {
+        setCurrentTab('admin');
+      }
+    };
+    window.addEventListener('hashchange', handleHashChange);
+
     const handlePropsUpdated = () => refreshData();
     const handleLeadsUpdated = () => refreshData();
+    const handleAuthChanged = () => setIsAdminAuth(isAdminAuthenticated());
 
     window.addEventListener('novitiate_properties_updated', handlePropsUpdated);
     window.addEventListener('novitiate_leads_updated', handleLeadsUpdated);
+    window.addEventListener('novitiate_auth_changed', handleAuthChanged);
 
     return () => {
+      window.removeEventListener('hashchange', handleHashChange);
       window.removeEventListener('novitiate_properties_updated', handlePropsUpdated);
       window.removeEventListener('novitiate_leads_updated', handleLeadsUpdated);
+      window.removeEventListener('novitiate_auth_changed', handleAuthChanged);
     };
   }, []);
 
@@ -69,6 +89,7 @@ export default function App() {
         currentTab={currentTab}
         onSelectTab={handleSelectTab}
         unreadLeadsCount={unreadLeadsCount}
+        isAdminLoggedIn={isAdminAuth}
       />
 
       {/* Main Content Area */}
@@ -112,11 +133,25 @@ export default function App() {
         )}
 
         {currentTab === 'admin' && (
-          <AdminPortal
-            properties={properties}
-            onPropertiesChange={refreshData}
-            onNavigateToTab={handleSelectTab}
-          />
+          isAdminAuth ? (
+            <AdminPortal
+              properties={properties}
+              onPropertiesChange={refreshData}
+              onNavigateToTab={handleSelectTab}
+              onLogout={() => {
+                setIsAdminAuth(false);
+                handleSelectTab('home');
+              }}
+            />
+          ) : (
+            <AdminLoginGate
+              onAuthenticated={() => {
+                setIsAdminAuth(true);
+                refreshData();
+              }}
+              onCancel={() => handleSelectTab('home')}
+            />
+          )
         )}
       </main>
 

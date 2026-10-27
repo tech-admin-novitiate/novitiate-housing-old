@@ -1,5 +1,5 @@
 import React from 'react';
-import { Shield, Phone, Mail, MapPin } from 'lucide-react';
+import { Shield, Phone, Mail, MapPin, Lock } from 'lucide-react';
 import { NovitiateLogo } from './NovitiateLogo';
 
 interface FooterProps {
@@ -60,8 +60,9 @@ export const Footer: React.FC<FooterProps> = ({ onSelectTab }) => {
                   onClick={() => onSelectTab('admin')}
                   className="text-neutral-400 hover:text-white transition-colors flex items-center gap-1.5"
                 >
-                  <span>Backend Admin Portal</span>
-                  <span className="text-[10px] px-1.5 py-0.5 rounded bg-neutral-800 text-neutral-300">Staff</span>
+                  <Lock className="w-3 h-3 text-neutral-500" />
+                  <span>Admin Portal</span>
+                  <span className="text-[10px] px-1.5 py-0.5 rounded bg-neutral-800 text-neutral-300">Protected</span>
                 </button>
               </li>
             </ul>

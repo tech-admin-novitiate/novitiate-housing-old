@@ -1,17 +1,19 @@
 import React, { useState } from 'react';
-import { Menu, X, ShieldCheck } from 'lucide-react';
+import { Menu, X, ShieldCheck, Lock } from 'lucide-react';
 import { NovitiateLogo } from './NovitiateLogo';
 
 interface HeaderProps {
   currentTab: string;
   onSelectTab: (tab: string) => void;
   unreadLeadsCount?: number;
+  isAdminLoggedIn?: boolean;
 }
 
 export const Header: React.FC<HeaderProps> = ({
   currentTab,
   onSelectTab,
-  unreadLeadsCount = 0
+  unreadLeadsCount = 0,
+  isAdminLoggedIn = false
 }) => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
@@ -69,23 +71,44 @@ export const Header: React.FC<HeaderProps> = ({
           </nav>
 
           {/* Zone 3: 1 Primary Action (Single-line control) */}
-          <div className="hidden md:flex items-center gap-3 shrink-0">
-            <button
-              onClick={() => handleNav('admin')}
-              className={`inline-flex items-center gap-2 px-4 py-2 text-xs font-semibold rounded-lg transition-all whitespace-nowrap shrink-0 border ${
-                currentTab === 'admin'
-                  ? 'bg-neutral-900 text-white border-neutral-900 shadow-xs'
-                  : 'bg-white hover:bg-neutral-50 text-neutral-800 border-neutral-200 hover:border-[#5C96D2]'
-              }`}
-            >
-              <ShieldCheck className="w-3.5 h-3.5 text-[#5C96D2]" />
-              <span>Admin Management</span>
-              {unreadLeadsCount > 0 && (
-                <span className="ml-1 px-1.5 py-0.2 rounded-full text-[10px] bg-[#E84144] text-white font-bold">
-                  {unreadLeadsCount}
-                </span>
-              )}
-            </button>
+          <div className="hidden md:flex items-center gap-2.5 shrink-0">
+            {isAdminLoggedIn ? (
+              <button
+                onClick={() => handleNav('admin')}
+                className={`inline-flex items-center gap-2 px-3.5 py-2 text-xs font-semibold rounded-lg transition-all whitespace-nowrap shrink-0 border cursor-pointer ${
+                  currentTab === 'admin'
+                    ? 'bg-neutral-900 text-white border-neutral-900 shadow-xs'
+                    : 'bg-white hover:bg-neutral-50 text-neutral-800 border-neutral-200 hover:border-[#5C96D2]'
+                }`}
+              >
+                <ShieldCheck className="w-3.5 h-3.5 text-emerald-500" />
+                <span>Admin Console</span>
+                {unreadLeadsCount > 0 && (
+                  <span className="ml-1 px-1.5 py-0.2 rounded-full text-[10px] bg-[#E84144] text-white font-bold">
+                    {unreadLeadsCount}
+                  </span>
+                )}
+              </button>
+            ) : (
+              <>
+                <button
+                  onClick={() => handleNav('contact')}
+                  className="inline-flex items-center gap-1.5 px-4 py-2 text-xs font-bold text-white bg-gradient-to-r from-[#E84144] to-[#F59415] hover:opacity-95 rounded-lg shadow-xs transition-all whitespace-nowrap shrink-0 cursor-pointer"
+                >
+                  <span>Inquire / Contact</span>
+                </button>
+                <button
+                  onClick={() => handleNav('admin')}
+                  title="Restricted Staff Login"
+                  className={`p-2 text-neutral-400 hover:text-neutral-700 hover:bg-neutral-100 rounded-lg transition-colors cursor-pointer ${
+                    currentTab === 'admin' ? 'bg-neutral-100 text-neutral-900' : ''
+                  }`}
+                  aria-label="Admin Portal"
+                >
+                  <Lock className="w-4 h-4" />
+                </button>
+              </>
+            )}
           </div>
 
           {/* Mobile Menu Toggle Button */}
@@ -118,21 +141,39 @@ export const Header: React.FC<HeaderProps> = ({
               {link.label}
             </button>
           ))}
-          <div className="pt-2 border-t border-neutral-100">
-            <button
-              onClick={() => handleNav('admin')}
-              className="w-full flex items-center justify-between px-3 py-2.5 rounded-md text-sm font-semibold bg-neutral-900 text-white"
-            >
-              <span className="flex items-center gap-2">
-                <ShieldCheck className="w-4 h-4" />
-                Admin Management Panel
-              </span>
-              {unreadLeadsCount > 0 && (
-                <span className="px-2 py-0.5 rounded-full text-xs bg-amber-400 text-neutral-950">
-                  {unreadLeadsCount} New
+          <div className="pt-2 border-t border-neutral-100 space-y-2">
+            {isAdminLoggedIn ? (
+              <button
+                onClick={() => handleNav('admin')}
+                className="w-full flex items-center justify-between px-3 py-2.5 rounded-md text-sm font-semibold bg-neutral-900 text-white cursor-pointer"
+              >
+                <span className="flex items-center gap-2">
+                  <ShieldCheck className="w-4 h-4 text-emerald-400" />
+                  <span>Admin Operations Console</span>
                 </span>
-              )}
-            </button>
+                {unreadLeadsCount > 0 && (
+                  <span className="px-2 py-0.5 rounded-full text-xs bg-[#E84144] text-white font-bold">
+                    {unreadLeadsCount} New
+                  </span>
+                )}
+              </button>
+            ) : (
+              <>
+                <button
+                  onClick={() => handleNav('contact')}
+                  className="w-full py-2.5 px-3 text-center text-sm font-bold text-white bg-gradient-to-r from-[#E84144] to-[#F59415] rounded-md shadow-xs cursor-pointer"
+                >
+                  Inquire / Contact Society Desk
+                </button>
+                <button
+                  onClick={() => handleNav('admin')}
+                  className="w-full flex items-center justify-center gap-2 py-2 text-xs font-semibold text-neutral-500 hover:text-neutral-800 cursor-pointer"
+                >
+                  <Lock className="w-3.5 h-3.5" />
+                  <span>Restricted Staff Portal</span>
+                </button>
+              </>
+            )}
           </div>
         </div>
       )}

@@ -44,11 +44,20 @@ export const HomeMarketing: React.FC<HomeMarketingProps> = ({
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           
           {/* Card 1: Housing Societies (Leaf Green Brand Anchor #72A346) */}
-          <div className="bg-white rounded-xl p-6 sm:p-7 border border-neutral-200/90 shadow-sm flex flex-col justify-between hover:border-[#72A346] transition-all group">
-            <div className="space-y-4">
-              <div className="w-10 h-10 rounded-lg bg-emerald-50 text-[#72A346] flex items-center justify-center font-bold">
-                <Building2 className="w-5 h-5" />
+          <div className="bg-white rounded-xl p-5 sm:p-6 border border-neutral-200/90 shadow-xs flex flex-col justify-between hover:border-[#72A346] hover:shadow-md transition-all group overflow-hidden">
+            <div className="space-y-3.5">
+              <div className="relative h-44 w-full overflow-hidden rounded-lg bg-neutral-100">
+                <img
+                  src="https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?auto=format&fit=crop&w=800&q=80"
+                  alt="Cooperative housing societies and residential complexes"
+                  loading="lazy"
+                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                />
+                <div className="absolute top-3 left-3 w-9 h-9 rounded-lg bg-white/95 backdrop-blur-xs text-[#72A346] shadow-xs flex items-center justify-center font-bold">
+                  <Building2 className="w-5 h-5" />
+                </div>
               </div>
+
               <h3 className="text-lg font-bold text-neutral-900 tracking-tight group-hover:text-[#72A346] transition-colors">
                 For Housing Societies
               </h3>
@@ -56,26 +65,26 @@ export const HomeMarketing: React.FC<HomeMarketingProps> = ({
                 Managing Committees & Society Office Bearers
               </p>
               <p className="text-sm text-neutral-600 leading-relaxed">
-                Involving housing societies in the entire tenancy cycle. We ensure reference checks to verify tenant credentials, enforce standard 2–3 year terms, and eliminate arbitrary NOC disputes.
+                Direct society involvement throughout tenancy with verified credentials, standard 2–3 year terms, and dispute-free NOC issuance.
               </p>
               
               <ul className="space-y-2 text-xs text-neutral-600 pt-2 border-t border-neutral-100">
                 <li className="flex items-center gap-2">
                   <CheckCircle2 className="w-4 h-4 text-[#72A346] shrink-0" />
-                  <span>Mandatory tenant workplace & landlord references</span>
+                  <span>Mandatory tenant & workplace verification</span>
                 </li>
                 <li className="flex items-center gap-2">
                   <CheckCircle2 className="w-4 h-4 text-[#72A346] shrink-0" />
-                  <span>Maharashtra Co-operative Societies Act compliance</span>
+                  <span>Maharashtra Co-op Societies Act compliance</span>
                 </li>
                 <li className="flex items-center gap-2">
                   <CheckCircle2 className="w-4 h-4 text-[#72A346] shrink-0" />
-                  <span>2–3 year structured tenancy agreements</span>
+                  <span>Structured 2–3 year tenancy agreements</span>
                 </li>
               </ul>
             </div>
 
-            <div className="pt-6 mt-6 border-t border-neutral-100">
+            <div className="pt-5 mt-5 border-t border-neutral-100">
               <button
                 onClick={() => onNavigateToTab('contact')}
                 className="inline-flex items-center gap-1.5 text-xs font-bold text-[#72A346] hover:underline"
@@ -87,11 +96,20 @@ export const HomeMarketing: React.FC<HomeMarketingProps> = ({
           </div>
 
           {/* Card 2: Real Estate Agents (Sky Blue Brand Anchor #5C96D2) */}
-          <div className="bg-white rounded-xl p-6 sm:p-7 border border-neutral-200/90 shadow-sm flex flex-col justify-between hover:border-[#5C96D2] transition-all group">
-            <div className="space-y-4">
-              <div className="w-10 h-10 rounded-lg bg-blue-50 text-[#5C96D2] flex items-center justify-center font-bold">
-                <Briefcase className="w-5 h-5" />
+          <div className="bg-white rounded-xl p-5 sm:p-6 border border-neutral-200/90 shadow-xs flex flex-col justify-between hover:border-[#5C96D2] hover:shadow-md transition-all group overflow-hidden">
+            <div className="space-y-3.5">
+              <div className="relative h-44 w-full overflow-hidden rounded-lg bg-neutral-100">
+                <img
+                  src="https://images.unsplash.com/photo-1560518883-ce09059eeffa?auto=format&fit=crop&w=800&q=80"
+                  alt="Certified real estate brokers and property advisory"
+                  loading="lazy"
+                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                />
+                <div className="absolute top-3 left-3 w-9 h-9 rounded-lg bg-white/95 backdrop-blur-xs text-[#5C96D2] shadow-xs flex items-center justify-center font-bold">
+                  <Briefcase className="w-5 h-5" />
+                </div>
               </div>
+
               <h3 className="text-lg font-bold text-neutral-900 tracking-tight group-hover:text-[#5C96D2] transition-colors">
                 For Real Estate Agents
               </h3>
@@ -99,13 +117,13 @@ export const HomeMarketing: React.FC<HomeMarketingProps> = ({
                 MahaRERA Licensed Brokers & Independent Consultants
               </p>
               <p className="text-sm text-neutral-600 leading-relaxed">
-                Empowering agents by providing verified access to gated housing societies across Vasai, Virar, Thane, and Mumbai suburbs, expanding revenue streams with zero friction.
+                Empowering agents with verified access to gated societies across Mumbai MMR, expanding revenue with zero paperwork friction.
               </p>
               
               <ul className="space-y-2 text-xs text-neutral-600 pt-2 border-t border-neutral-100">
                 <li className="flex items-center gap-2">
                   <CheckCircle2 className="w-4 h-4 text-[#5C96D2] shrink-0" />
-                  <span>Direct inventory access with pre-cleared NOCs</span>
+                  <span>Direct inventory with pre-cleared NOCs</span>
                 </li>
                 <li className="flex items-center gap-2">
                   <CheckCircle2 className="w-4 h-4 text-[#5C96D2] shrink-0" />
@@ -113,12 +131,12 @@ export const HomeMarketing: React.FC<HomeMarketingProps> = ({
                 </li>
                 <li className="flex items-center gap-2">
                   <CheckCircle2 className="w-4 h-4 text-[#5C96D2] shrink-0" />
-                  <span>Verified buyer and high-intent tenant leads</span>
+                  <span>High-intent verified buyer & tenant leads</span>
                 </li>
               </ul>
             </div>
 
-            <div className="pt-6 mt-6 border-t border-neutral-100">
+            <div className="pt-5 mt-5 border-t border-neutral-100">
               <button
                 onClick={() => onNavigateToTab('contact')}
                 className="inline-flex items-center gap-1.5 text-xs font-bold text-[#5C96D2] hover:underline"
@@ -130,11 +148,20 @@ export const HomeMarketing: React.FC<HomeMarketingProps> = ({
           </div>
 
           {/* Card 3: Home Buyers & Renters (Coral Red / Warm Orange Brand Anchor #E84144) */}
-          <div className="bg-white rounded-xl p-6 sm:p-7 border border-neutral-200/90 shadow-sm flex flex-col justify-between hover:border-[#E84144] transition-all group">
-            <div className="space-y-4">
-              <div className="w-10 h-10 rounded-lg bg-rose-50 text-[#E84144] flex items-center justify-center font-bold">
-                <KeyRound className="w-5 h-5" />
+          <div className="bg-white rounded-xl p-5 sm:p-6 border border-neutral-200/90 shadow-xs flex flex-col justify-between hover:border-[#E84144] hover:shadow-md transition-all group overflow-hidden">
+            <div className="space-y-3.5">
+              <div className="relative h-44 w-full overflow-hidden rounded-lg bg-neutral-100">
+                <img
+                  src="https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?auto=format&fit=crop&w=800&q=80"
+                  alt="Modern home interiors for buyers and tenants"
+                  loading="lazy"
+                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                />
+                <div className="absolute top-3 left-3 w-9 h-9 rounded-lg bg-white/95 backdrop-blur-xs text-[#E84144] shadow-xs flex items-center justify-center font-bold">
+                  <KeyRound className="w-5 h-5" />
+                </div>
               </div>
+
               <h3 className="text-lg font-bold text-neutral-900 tracking-tight group-hover:text-[#E84144] transition-colors">
                 For Buyers & Renters
               </h3>
@@ -142,17 +169,17 @@ export const HomeMarketing: React.FC<HomeMarketingProps> = ({
                 Families, Corporate Tenants & First-time Buyers
               </p>
               <p className="text-sm text-neutral-600 leading-relaxed">
-                Enjoy transparent property transactions with zero last-minute society NOC rejections, transparent pricing, verified chain of title deeds, and verified society amenities.
+                Transparent property journeys with pre-approved society clearances, verified chain of title deeds, and zero surprises.
               </p>
               
               <ul className="space-y-2 text-xs text-neutral-600 pt-2 border-t border-neutral-100">
                 <li className="flex items-center gap-2">
                   <CheckCircle2 className="w-4 h-4 text-[#E84144] shrink-0" />
-                  <span>100% pre-vetted legal titles and OC verification</span>
+                  <span>100% pre-vetted legal titles and OC checks</span>
                 </li>
                 <li className="flex items-center gap-2">
                   <CheckCircle2 className="w-4 h-4 text-[#E84144] shrink-0" />
-                  <span>Smooth society move-in with pre-approved entry passes</span>
+                  <span>Smooth society move-in with pre-cleared passes</span>
                 </li>
                 <li className="flex items-center gap-2">
                   <CheckCircle2 className="w-4 h-4 text-[#E84144] shrink-0" />
@@ -161,7 +188,7 @@ export const HomeMarketing: React.FC<HomeMarketingProps> = ({
               </ul>
             </div>
 
-            <div className="pt-6 mt-6 border-t border-neutral-100">
+            <div className="pt-5 mt-5 border-t border-neutral-100">
               <button
                 onClick={onExploreProperties}
                 className="inline-flex items-center gap-1.5 text-xs font-bold text-[#E84144] hover:underline"
