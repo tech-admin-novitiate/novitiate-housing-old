@@ -408,6 +408,8 @@ export const PropertiesTab: React.FC<PropertiesTabProps> = ({
                 >
                   <PropertyVisual
                     preset={property.imagePreset}
+                    images={property.images}
+                    cycleIntervalSeconds={property.imageCycleRateSeconds}
                     title={property.title}
                     type={property.type}
                     className="h-48 w-full group-hover:scale-[1.01] transition-transform duration-300"
@@ -531,6 +533,8 @@ export const PropertiesTab: React.FC<PropertiesTabProps> = ({
               {/* Visual Banner */}
               <PropertyVisual
                 preset={selectedProperty.imagePreset}
+                images={selectedProperty.images}
+                cycleIntervalSeconds={selectedProperty.imageCycleRateSeconds}
                 title={selectedProperty.title}
                 type={selectedProperty.type}
                 className="h-64 w-full rounded-xl"

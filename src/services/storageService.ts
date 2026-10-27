@@ -2,23 +2,62 @@ import { Property, Lead, AnalyticsEvent, LeadStatus, LeadRole } from '../types';
 import { INITIAL_PROPERTIES, INITIAL_LEADS, INITIAL_ANALYTICS_EVENTS } from '../data/initialData';
 
 const STORAGE_KEYS = {
-  PROPERTIES: 'novitiate_properties_v1',
+  PROPERTIES: 'novitiate_properties_v2',
   LEADS: 'novitiate_leads_v1',
   ANALYTICS: 'novitiate_analytics_v1',
 };
+
+// Curated high-resolution copyright-free architecture presets
+export const CURATED_PROPERTY_IMAGES = {
+  modern_tower: [
+    'https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?auto=format&fit=crop&w=800&q=80',
+    'https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?auto=format&fit=crop&w=800&q=80',
+    'https://images.unsplash.com/photo-1556911220-e15b29be8c8f?auto=format&fit=crop&w=800&q=80',
+    'https://images.unsplash.com/photo-1595526114035-0d45ed16cfbf?auto=format&fit=crop&w=800&q=80'
+  ],
+  luxury_interior: [
+    'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=800&q=80',
+    'https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&w=800&q=80',
+    'https://images.unsplash.com/photo-1600566753376-12c8ab7fb75b?auto=format&fit=crop&w=800&q=80',
+    'https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?auto=format&fit=crop&w=800&q=80'
+  ],
+  exterior_building: [
+    'https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&w=800&q=80',
+    'https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?auto=format&fit=crop&w=800&q=80',
+    'https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?auto=format&fit=crop&w=800&q=80',
+    'https://images.unsplash.com/photo-1600585154526-990dced4db0d?auto=format&fit=crop&w=800&q=80'
+  ]
+};
+
+// Generates system-governed random cycle time strictly between 3 - 15 seconds
+export function generateSystemGovernedCycleRate(): number {
+  return Math.floor(Math.random() * 13) + 3; // 3 to 15 seconds
+}
+
+export function ensurePropertyImages(p: Property, index: number = 0): Property {
+  const defaultImages = CURATED_PROPERTY_IMAGES[(p.imagePreset as keyof typeof CURATED_PROPERTY_IMAGES) || 'modern_tower'] || CURATED_PROPERTY_IMAGES.modern_tower;
+  const images = (p.images && p.images.length > 0) ? p.images : (p.imageUrl ? [p.imageUrl] : defaultImages);
+  
+  // Deterministic seed rate between 3 and 15 seconds for initial items if not yet set
+  const assignedCycleRate = p.imageCycleRateSeconds || (((index * 4 + 5) % 13) + 3);
+
+  return {
+    ...p,
+    images,
+    imageCycleRateSeconds: assignedCycleRate
+  };
+}
 
 // Properties Storage
 export function getProperties(): Property[] {
   try {
     const raw = localStorage.getItem(STORAGE_KEYS.PROPERTIES);
-    if (!raw) {
-      localStorage.setItem(STORAGE_KEYS.PROPERTIES, JSON.stringify(INITIAL_PROPERTIES));
-      return INITIAL_PROPERTIES;
-    }
-    return JSON.parse(raw);
+    let list: Property[] = raw ? JSON.parse(raw) : INITIAL_PROPERTIES;
+    list = list.map((p, idx) => ensurePropertyImages(p, idx));
+    return list;
   } catch (err) {
     console.error('Error reading properties from storage', err);
-    return INITIAL_PROPERTIES;
+    return INITIAL_PROPERTIES.map((p, idx) => ensurePropertyImages(p, idx));
   }
 }
 
@@ -35,19 +74,30 @@ export function addProperty(newProp: Omit<Property, 'id' | 'dateAdded'>): Proper
   const current = getProperties();
   const id = `prop-${Date.now()}`;
   const dateAdded = new Date().toISOString().split('T')[0];
+
+  // System-governed random cycle rate strictly between 3 - 15 seconds
+  const systemCycleRate = newProp.imageCycleRateSeconds || generateSystemGovernedCycleRate();
+
+  // Ensure images array is set
+  const defaultImages = CURATED_PROPERTY_IMAGES[(newProp.imagePreset as keyof typeof CURATED_PROPERTY_IMAGES) || 'modern_tower'] || CURATED_PROPERTY_IMAGES.modern_tower;
+  const images = (newProp.images && newProp.images.length > 0) ? newProp.images : defaultImages;
+
   const fullProperty: Property = {
     ...newProp,
     id,
     dateAdded,
+    images,
+    imageCycleRateSeconds: systemCycleRate,
   };
   saveProperties([fullProperty, ...current]);
-  logAnalyticsEvent('admin_action' as any, `Added new property: ${fullProperty.title}`);
+  logAnalyticsEvent('admin_action' as any, `Added new property: ${fullProperty.title} (Cycle rate: ${systemCycleRate}s)`);
   return fullProperty;
 }
 
 export function updateProperty(updated: Property): void {
   const current = getProperties();
-  const next = current.map((p) => (p.id === updated.id ? updated : p));
+  const cycleRate = updated.imageCycleRateSeconds || generateSystemGovernedCycleRate();
+  const next = current.map((p) => (p.id === updated.id ? { ...updated, imageCycleRateSeconds: cycleRate } : p));
   saveProperties(next);
   logAnalyticsEvent('admin_action' as any, `Updated property: ${updated.title}`);
 }

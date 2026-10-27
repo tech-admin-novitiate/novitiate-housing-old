@@ -235,6 +235,8 @@ export const HomeMarketing: React.FC<HomeMarketingProps> = ({
               <div>
                 <PropertyVisual
                   preset={property.imagePreset}
+                  images={property.images}
+                  cycleIntervalSeconds={property.imageCycleRateSeconds}
                   title={property.title}
                   type={property.type}
                   className="h-48 w-full group-hover:scale-[1.02] transition-transform duration-300"

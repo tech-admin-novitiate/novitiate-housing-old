@@ -8,13 +8,13 @@ export interface Property {
   title: string;
   description: string;
   type: PropertyType;
-  price: number; // e.g. 24000 or 8500000
-  priceFormatted: string; // e.g. "₹24,000 / month" or "₹85 Lakh"
+  price: number;
+  priceFormatted: string;
   deposit?: number;
-  locality: string; // "Vasai West", "Evershine City", "Virar West", etc.
-  city: string; // "Vasai-Virar", "Mumbai", "Thane"
+  locality: string;
+  city: string;
   societyName: string;
-  bedrooms: number; // 1, 2, 3, 4
+  bedrooms: number;
   bathrooms: number;
   areaSqFt: number;
   floor: string;
@@ -22,7 +22,7 @@ export interface Property {
   amenities: string[];
   societyNocStatus: NOCStatus;
   tenantReferenceCheck: boolean;
-  leaseTermYears?: number; // 2-3 years
+  leaseTermYears?: number;
   status: PropertyStatus;
   featured?: boolean;
   agent: {
@@ -33,7 +33,9 @@ export interface Property {
   };
   dateAdded: string;
   imageUrl?: string;
-  imagePreset?: string; // used for styled SVG architectural vector visual
+  images?: string[];
+  imageCycleRateSeconds?: number;
+  imagePreset?: string;
 }
 
 export type LeadRole = 'Buyer' | 'Tenant' | 'Housing Society Committee' | 'Real Estate Agent';
