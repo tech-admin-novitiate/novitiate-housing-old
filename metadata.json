@@ -1,0 +1,6 @@
+{
+  "name": "Novitiate Housing - Verified Society Tenancy & Property Sales",
+  "description": "Next-generation real estate lead generation and property management platform created to simplify tenancy and sales for housing societies, agents, and buyers.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

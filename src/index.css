@@ -1,0 +1,58 @@
+@import "tailwindcss";
+
+@layer base {
+  :root {
+    --nov-orange: #F59415;
+    --nov-red: #E84144;
+    --nov-green: #72A346;
+    --nov-blue: #5C96D2;
+    --nov-indigo: #6E739B;
+    --nov-slate: #8C929D;
+  }
+
+  body {
+    font-family: 'Plus Jakarta Sans', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+  }
+
+  code, pre, .font-mono {
+    font-family: 'JetBrains Mono', monospace;
+    font-variant-numeric: tabular-nums;
+  }
+}
+
+/* Novitiate Brand Accents */
+.text-nov-orange { color: #F59415; }
+.bg-nov-orange { background-color: #F59415; }
+.border-nov-orange { border-color: #F59415; }
+
+.text-nov-red { color: #E84144; }
+.bg-nov-red { background-color: #E84144; }
+.border-nov-red { border-color: #E84144; }
+
+.text-nov-green { color: #72A346; }
+.bg-nov-green { background-color: #72A346; }
+.border-nov-green { border-color: #72A346; }
+
+.text-nov-blue { color: #5C96D2; }
+.bg-nov-blue { background-color: #5C96D2; }
+.border-nov-blue { border-color: #5C96D2; }
+
+.text-nov-indigo { color: #6E739B; }
+.bg-nov-indigo { background-color: #6E739B; }
+.border-nov-indigo { border-color: #6E739B; }
+
+/* Custom scrollbar for clean UI */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
+}
